@@ -6,33 +6,54 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
     entry: { main: './src/index.js' },
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: '[name].[chunkhash].js'
+        path: path.resolve(__dirname, "/dist"),
+        filename: "main.js"
     },
+    // devServer: {
+    //     contentBase: path.join(__dirname, "/dist"),
+    //     compress: true,
+    //     port: 9000,
+    //     watchContentBase: true,
+    //     progress: true
+    // },
     module: {
         rules: [{
-                test: /\.js$/,
-                exclude: /node_modules/,
+                test: /\.m?js$/,
+                exclude: /(node_modules|bower_components)/,
                 use: {
                     loader: "babel-loader"
                 }
             },
+            // {
+            //     test: /\.css$/,
+            //     use: [
+            //         "style-loader",
+            //         {
+            //             loader: "css-loader",
+            //             options: {
+            //                 modules: true
+            //             }
+            //         }
+            //     ]
+            // },
             {
                 test: /\.scss$/,
-                use:  [  'style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+                use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sсss-loader']
+            },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: ["file-loader"]
             }
         ]
+
     },
     plugins: [
         new MiniCssExtractPlugin({
             filename: 'style.[contenthash].css',
-          }),
+        }),
         //new ExtractTextPlugin({ filename: 'style.css' }),
         new HtmlWebpackPlugin({
-            inject: false,
-            hash: true,
-            template: './src/index.html',
-            filename: 'index.html'
+            template: './src/index.html'
         }),
         new WebpackMd5Hash()
     ]
