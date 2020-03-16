@@ -1,43 +1,50 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+//const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const WebpackMd5Hash = require('webpack-md5-hash');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
     entry: { main: './src/index.js' },
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'main.js'
+        path: path.resolve(__dirname, "./dist"),
+        filename: "main.js"
     },
+    // devServer: {
+    //     // contentBase: path.join(__dirname, "/dist"),
+    //     // compress: true,
+    //     port: 9000,
+    //     // watchContentBase: true,
+    //     // progress: true
+    // },
     module: {
         rules: [{
-                test: /\.js$/,
-                exclude: /node_modules/,
+                test: /\.m?js$/,
+                exclude: /(node_modules|bower_components)/,
                 use: {
                     loader: "babel-loader"
                 }
-            },
-            {
-                test: /\.css$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: ['css-loader']
-                })
-            },
-            {
+            }, {
                 test: /\.scss$/,
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: ['css-loader', 'sass-loader']
-                })
+                use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader']
+            },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: ["file-loader"]
             }
         ]
+
     },
     plugins: [
-        new ExtractTextPlugin({ filename: 'style.css' }),
+        new MiniCssExtractPlugin({
+            filename: 'style.css',
+        }),
+        new CleanWebpackPlugin({
+            cleanAfterEveryBuildPatterns: ['dist']
+        }),
         new HtmlWebpackPlugin({
-            inject: false,
-            hash: true,
-            template: './src/index.html',
-            filename: 'index.html'
-        })
+            template: './src/index.html'
+        }),
+        new WebpackMd5Hash()
     ]
 }
