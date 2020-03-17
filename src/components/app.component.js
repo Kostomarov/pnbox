@@ -5,7 +5,7 @@ import { BrowserMultiFormatReader } from '@zxing/library';
 const ScanPanel = () => {
     let selectedDeviceId;
     const codeReader = new BrowserMultiFormatReader();
-    const items = new [{itemName: "Number one", itemId: 1}, {itemName:"Number two", itemId: 2}, {itemName:"Number three", itemId: 3}];
+    const items = [{itemName: "Number one", itemId: 1}, {itemName:"Number two", itemId: 2}, {itemName:"Number three", itemId: 3}];
     console.log('ZXing code reader initialized');
 
     codeReader.getVideoInputDevices()
