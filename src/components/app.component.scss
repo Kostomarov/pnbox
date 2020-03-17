@@ -1,3 +1,24 @@
-.intro {
-    background-color: yellowgreen;
+.wrapper {
+    margin-top: 2em;
+    .intro {
+        background-color: yellowgreen;
+    }
+    .videowrapper {
+        .videoblock {
+            border: 1px solid gray;
+        }
+    }
+    .sourceSelectPanel {
+        .sourceSelectLabel {
+            width: 400px;
+        }
+        .sourceSelect {
+            width: 400px;
+        }
+    }
+    .resultWrap {
+        .result {
+            width: 400px;
+        }
+    }
 }
