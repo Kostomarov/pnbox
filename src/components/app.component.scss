@@ -1,13 +1,22 @@
 .wrapper {
     margin-top: 2em;
     .intro {
-        background-color: yellowgreen;
+        font-size: 32px;
+        font-weight: bold;
     }
     .videowrapper {
         .videoblock {
             border: 1px solid gray;
         }
     }
+    .buttonWrapper{
+        .button{
+            background-color: #FEA400;
+            border: 0.1rem solid #FEA400;
+        }
+    }
+
+
     .sourceSelectPanel {
         .sourceSelectLabel {
             width: 400px;
@@ -16,9 +25,18 @@
             width: 400px;
         }
     }
+    .mark{
+        margin-top: 20px;
+    }
+
+
     .resultWrap {
-        .result {
-            width: 400px;
+        border-left: 0.3rem solid #FEA400;
+        background-color: #F2F2F2;
+        width: 400px;
+        .resultData {
+            width: 350px;
+            margin-left: 20px;
         }
     }
 }
