@@ -4,97 +4,76 @@ import { BrowserMultiFormatReader } from '@zxing/library';
 
 
 const ScanPanel = () => {
-
-    const [videoDevices, setVideoDevices] = useState([]);//label: " Камера не выбрана ", deviceId: "0000" 
-    //const [selectedDeviceLabel, setSelectedDeviceLabel] = useState('--');
-    const [selectedDeviceId, setSelectedDeviceId] = useState('0000');
-    const [resulttext, setResulttext] = useState('--');
-
-    const codeReader = new BrowserMultiFormatReader();
     useEffect(() => {
-        console.log("upd1  -- "+ selectedDeviceId);
+        let selectedDeviceId;
+        const codeReader = new BrowserMultiFormatReader()
+        console.log('ZXing code reader initialized')
+
         codeReader.getVideoInputDevices()
-        .then((videoInputDevices) => {
-            
-            // Получаю список камер добавляю к нему пункт камера не выбрана
-            
-            if (videoDevices.length === 0 && videoInputDevices.length !== 0) {
-                // Данные для комбобокса 
-                let addDev = [];
-                addDev = videoInputDevices.map((item => { return { label: item.label, deviceId: item.deviceId } }));
-                addDev.unshift({ label: " Камера не выбрана ", deviceId: "0000" });
-                setVideoDevices(addDev);
-                //setSelectedDeviceId('0000');
-                
-            }
+            .then((videoInputDevices) => {
+                const sourceSelect = document.getElementById('sourceSelect')
+                selectedDeviceId = videoInputDevices[0].deviceId
+                if (videoInputDevices.length >= 1) {
+                    videoInputDevices.forEach((element) => {
+                        const sourceOption = document.createElement('option')
+                        sourceOption.text = element.label
+                        sourceOption.value = element.deviceId
+                        sourceSelect.appendChild(sourceOption)
+                    })
 
-            console.log(selectedDeviceId);
-            
-            if (selectedDeviceId == '0000' || selectedDeviceId === null || selectedDeviceId === undefined) {
-                codeReader.reset();
-                console.log('not not not');
-                //setResulttext('--')
-            }
-            else {
-                console.log('ie ie ie');
-                codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
-                    if (result) {
-                        setResulttext(result.text)
-                    }
-                    // if(err){
-                    //     console.log(err);
-                    // }
-                });
-            }
-        })
-        .catch((err) => {
-            console.error(err)
-        })
+                    sourceSelect.onchange = () => {
+                        selectedDeviceId = sourceSelect.value;
+                        alert('выбрано');
+                    };
 
+                    const sourceSelectPanel = document.getElementById('sourceSelectPanel')
+                    //sourceSelectPanel.style.display = 'block'
+                }
 
+                document.getElementById('startButton').addEventListener('click', () => {
+                    codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
+                        if (result) {
+                            console.log(result)
+                            document.getElementById('result').textContent = result.text
+                        }
+                        // if (err && !(err instanceof ZXing.NotFoundException)) {
+                        //   console.error(err)
+                        //   document.getElementById('result').textContent = err
+                        // }
+                    })
+                    console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
+                })
+
+                document.getElementById('resetButton').addEventListener('click', () => {
+                    codeReader.reset()
+                    document.getElementById('result').textContent = '';
+                    console.log('Reset.')
+                })
+
+            })
+            .catch((err) => {
+                console.error(err)
+            })
     });
-
-    //value={selectedDeviceId} 
-    
-    let onChangeSource = (event) => {
-        console.log(event.target.value);
-        
-        setSelectedDeviceId(event.target.value);
-    };
 
     return (
         <main className="wrapper">
             <section className="container" id="demo-content">
-                <div className='intro'>ЭМЕКС. Сканирование. Тест.</div>
-                <p>Тест сканирования линейных и QR-кодов</p>
-
+                <div className='intro'>ЭМЕКС. Тест-сканер.</div>
                 <div className="sourceSelectPanel" >
-                    <label className="sourceSelectPanel">Выбор камеры:</label>
-
-                    <select className="sourceSelect" onChange={onChangeSource}>
-                        {videoDevices.map((item) => <option key={item.label} value={item.deviceId}>{item.label}</option>)}
-                    </select>
+                    <select id="sourceSelect" className="sourceSelect" ></select>
                 </div>
-                
-
-                {/* <div className="buttonWrapper">
-                    <button className="button" id="startButton" onClick={Start}>Включить камеру</button>
-                    <button className="button" id="stopButton" onClick={Stop}>Выключить камеру</button>
-                </div> */}
-
-
+                <div className="buttonWrapper">
+                    <button className="button" id="startButton" >Включить </button>
+                    <button className="button" id="resetButton" >Выключить </button>
+                </div>
                 <div className='videowrapper'>
-                    <video className='videoblock' id="video" width="300" height="200"></video>
+                    <video className='videoblock' id="video" width="300" height="300"></video>
                 </div>
-
-                {/* <div className="mark">Выбор камеры:</div>
-                <div className="resultWrap">
-                    <span className="resultData">{selectedDeviceLabel}</span>
-                </div> */}
 
                 <div className="mark">Результат сканирования:</div>
                 <div className="resultWrap">
-                    <span className="resultData">{resulttext}</span>
+                    <span id='result' className="resultData"></span>
                 </div>
             </section>
         </main>
