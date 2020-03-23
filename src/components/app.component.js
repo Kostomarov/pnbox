@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./app.component.scss";
 import { BrowserMultiFormatReader } from '@zxing/library';
+import KeyboardEventHandler from 'react-keyboard-event-handler';
 
 
-const ScanPanel = () => {
+const ScanPanel = (props) => {
     useEffect(() => {
         let selectedDeviceId;
         const codeReader = new BrowserMultiFormatReader()
@@ -75,7 +76,18 @@ const ScanPanel = () => {
                 <div className="resultWrap">
                     <span id='result' className="resultData"></span>
                 </div>
+                {/* <div>key detected: {props.eventKey}</div> */}
             </section>
+            <KeyboardEventHandler
+                handleKeys={['all']}
+                onKeyEvent={(key, e) => { 
+                    var el = document.getElementById('result');
+                    if(key !== 'enter'){el.textContent = el.textContent + key;}
+                    else{
+                        el.textContent ='';
+                    }
+                    console.log(`do something upon keydown event of ${key}`);
+                    }} />
         </main>
 
     );
