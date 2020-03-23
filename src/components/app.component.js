@@ -57,6 +57,8 @@ const ScanPanel = (props) => {
             })
     });
 
+    let isDelete = false;
+
     return (
         <main className="wrapper">
             <section className="container" id="demo-content">
@@ -65,8 +67,8 @@ const ScanPanel = (props) => {
                     <select id="sourceSelect" className="sourceSelect" ></select>
                 </div>
                 <div className="buttonWrapper">
-                    <button className="button" id="startButton" >Включить </button>
-                    <button className="button" id="resetButton" >Выключить </button>
+                    <button className="button" id="startButton" >Вкл. </button>
+                    <button className="button" id="resetButton" >Выкл. </button>
                 </div>
                 <div className='videowrapper'>
                     <video className='videoblock' id="video" width="300" height="300"></video>
@@ -77,17 +79,22 @@ const ScanPanel = (props) => {
                     <span id='result' className="resultData"></span>
                 </div>
                 {/* <div>key detected: {props.eventKey}</div> */}
+                
             </section>
             <KeyboardEventHandler
                 handleKeys={['all']}
-                onKeyEvent={(key, e) => { 
+                onKeyEvent={(key, e) => {
                     var el = document.getElementById('result');
-                    if(key !== 'enter'){el.textContent = el.textContent + key;}
-                    else{
-                        el.textContent ='';
+                    if (isDelete) {
+                    el.textContent = '';
+                        isDelete = false;
+                    };
+                    if (key !== 'enter') { el.textContent = el.textContent + key; }
+                    else {
+                        isDelete = true;
                     }
                     console.log(`do something upon keydown event of ${key}`);
-                    }} />
+                }} />
         </main>
 
     );
