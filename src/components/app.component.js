@@ -27,7 +27,7 @@ const ScanPanel = (props) => {
                         alert('выбрано');
                     };
 
-                    const sourceSelectPanel = document.getElementById('sourceSelectPanel')
+                    //const sourceSelectPanel = document.getElementById('sourceSelectPanel')
                     //sourceSelectPanel.style.display = 'block'
                 }
 
@@ -36,6 +36,7 @@ const ScanPanel = (props) => {
                         if (result) {
                             console.log(result)
                             document.getElementById('result').textContent = result.text
+                            document.getElementById('inputCode').focus();
                         }
                         // if (err && !(err instanceof ZXing.NotFoundException)) {
                         //   console.error(err)
@@ -49,7 +50,10 @@ const ScanPanel = (props) => {
                     codeReader.reset()
                     document.getElementById('result').textContent = '';
                     console.log('Reset.')
+                    document.getElementById('inputCode').focus();
                 })
+
+                document.getElementById('inputCode').focus();
 
             })
             .catch((err) => {
@@ -57,7 +61,30 @@ const ScanPanel = (props) => {
             })
     });
 
+
+let onPasteEventHandler = (e) => {
+    var el1 = document.getElementById('symb');
+    el1.textContent = e.clipboardData.getData('Text');
+    document.getElementById('inputCode').focus();
+    document.getElementById('inputCode').select();
+}
+
     let isDelete = false;
+
+    let GetAndroidKeyValue = (kode) => {
+        let az = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        let numbers = '0123456789'
+
+        if (kode >= 29 && kode <= 54) {
+            return az[kode - 29];
+        }
+
+        if (kode >= 7 && kode <= 16) {
+            return numbers[kode - 7];
+        }
+
+        return '-';
+    }
 
     return (
         <main className="wrapper">
@@ -76,24 +103,40 @@ const ScanPanel = (props) => {
 
                 <div className="mark">Результат сканирования:</div>
                 <div className="resultWrap">
+                    <span id='symb' className="resultDatacComm"> </span>
+                </div>
+                <div className="resultWrap">
                     <span id='result' className="resultData"></span>
                 </div>
-                {/* <div>key detected: {props.eventKey}</div> */}
+                <input id='inputCode' className='inputWrap' onPaste={onPasteEventHandler}/>
                 
+
             </section>
             <KeyboardEventHandler
                 handleKeys={['all']}
+                handleEventType='keyup'
                 onKeyEvent={(key, e) => {
                     var el = document.getElementById('result');
+                    var el1 = document.getElementById('symb');
                     if (isDelete) {
-                    el.textContent = '';
+                        el.textContent = '';
                         isDelete = false;
                     };
-                    if (key !== 'enter') { el.textContent = el.textContent + key; }
-                    else {
-                        isDelete = true;
+
+                    if (key === 'other') {
+                        if (key !== 66) { el.textContent = el.textContent + e.keyCode; }//GetAndroidKeyValue(e.keyCode); }
+                        else {
+                            isDelete = true;
+                        }
+                    } else {
+                        if (key !== 'enter') { el.textContent = el.textContent + key; }
+                        else {
+                            isDelete = true;
+                        }
+
                     }
-                    console.log(`do something upon keydown event of ${key}`);
+                    el1.textContent = `keyCode ${e.keyCode} of which ${e.which} and charCode ${e.charCode}`;
+                    console.log(`do something upon keydown keyCode ${e.keyCode} of which ${e.which} and charCode ${e.charCode}`);
                 }} />
         </main>
 

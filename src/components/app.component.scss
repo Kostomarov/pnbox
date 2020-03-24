@@ -39,9 +39,18 @@
         border-left: 0.3rem solid #FEA400;
         background-color: #F2F2F2;
         width: 300px;
+        .resultDatacComm{
+            width: 300px;
+            margin-left: 20px;
+            font-size: 14px;
+        }
         .resultData {
             width: 300px;
             margin-left: 20px;
         }
+    }
+
+    .inputWrap{
+        width: 300px;  
     }
 }
