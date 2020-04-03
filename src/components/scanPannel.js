@@ -117,11 +117,12 @@ const ScanPanel = ({scannedCode}) => {
 
     return (
         <div className="scanPannelContainer">
+            <div className="iconScan"></div>
         <div className="scanMarkHeader">Сканируй ШК</div>
         <div className="scanMarkComment">При отсутствии встроенного сканера, <br/> используйте камеру</div>
             {/* <div className="scanMark">Результат сканирования:</div> */}
             <div className="resultWrap">
-                <span id='result' className="resultData" ref={resultRef}></span>
+                <div id='result' className="resultData" ref={resultRef}></div>
             </div>
 
             {/* <input id='inputCode' className='inputWrap' onPaste={onPasteEventHandler} /> */}

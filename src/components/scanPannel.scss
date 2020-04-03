@@ -6,6 +6,13 @@
     align-items: center;
     margin-top: 15px;
 
+    .iconScan{
+        min-height: 48px;
+        min-width: 70px;
+        background-image: url('./images/scan_icon.png');
+        background-repeat: no-repeat;
+    }
+
     .scanMarkHeader {
         flex: 0 0 auto;
         margin-top: 10px;
@@ -37,6 +44,7 @@
     .sourceSelectPanel {
         flex: 0 0 auto;
         margin-top: 5px;
+        font-size: 12px;
         .sourceSelectLabel {
             width: 300px;
         }
@@ -52,14 +60,18 @@
     .resultWrap {
         flex: 0 0 auto;
         margin-top: 15px;
-        border-left: 0.3rem solid #fea400;
+        min-height: 20px;
+        border-radius: 10px;
         background-color: #f2f2f2;
         width: 300px;
         margin-bottom: 5px;
+        font-size: 12px;
 
         .resultData {
             width: 300px;
             margin-left: 20px;
+            margin-top: 4px;
+            text-align: center;
         }
     }
 }
