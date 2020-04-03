@@ -12,7 +12,9 @@ const LoginPanel = (props) => {
     return (
         <div className="loginWrapper">
             <div className="loginContainer">
-                <div className='loginHeader'>Авторизация</div>
+                <div className='loginHeader'>
+                    <div className='loginHeaderlabel'>Авторизация</div>
+                </div>
                 <div className='loginSubHeader'>Сканировать пропуск</div>
                 <ScanPannel />
             </div>
