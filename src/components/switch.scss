@@ -1,0 +1,37 @@
+.switchContainer {
+    margin: 5px;
+    .mark {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        font-size: 12px;
+        float: left;
+    }
+
+    .switchBase {
+        margin-left: 10px;
+        margin-top: 4px;
+        min-width: 34px;
+        width: 34px;
+        min-height: 14px;
+        height: 14px;
+        border-radius: 7px;
+        background-color: lightgrey;
+        float: left;
+        .switchPin {
+            margin-top: -3px;
+            margin-left: -3px;
+            min-width: 20px;
+            min-height: 20px;
+            border-radius: 10px;
+            float: left;
+            background-color: grey;
+            &.On{
+                float: right;
+            background-color: orange;
+            
+            }
+        }
+        
+        
+    }
+}
