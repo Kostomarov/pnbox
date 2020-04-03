@@ -5,7 +5,7 @@ import KeyboardEventHandler from 'react-keyboard-event-handler';
 import Switch from './Switch'
 
 
-const ScanPanel = ({scannedCode}) => {
+const ScanPanel = ({ scannedCode }) => {
 
     let isDelete = false;
 
@@ -117,14 +117,12 @@ const ScanPanel = ({scannedCode}) => {
 
     return (
         <div className="scanPannelContainer">
-            <div className="iconScan"></div>
-        <div className="scanMarkHeader">Сканируй ШК</div>
-        <div className="scanMarkComment">При отсутствии встроенного сканера, <br/> используйте камеру</div>
-            {/* <div className="scanMark">Результат сканирования:</div> */}
+            {!isCameraOn && <div className="iconScan"></div>}
+            {!isCameraOn && <div className="scanMarkHeader">Сканируй ШК</div>}
+            {!isCameraOn && <div className="scanMarkComment">При отсутствии встроенного сканера, <br /> используйте камеру</div>}
             <div className="resultWrap">
                 <div id='result' className="resultData" ref={resultRef}></div>
             </div>
-
             {/* <input id='inputCode' className='inputWrap' onPaste={onPasteEventHandler} /> */}
             {isCameraOn && <div className='videowrapper'>
                 <video className='videoblock' id="video" width="300" height="300"></video>
@@ -133,7 +131,7 @@ const ScanPanel = ({scannedCode}) => {
                 <select ref={sourceSelectRef} className="sourceSelect" ></select>
             </div>
             <Switch isOn={isCameraOn} onSwichClick={CameraSwichClick} label={"Камера:"} />
-            
+
             <KeyboardEventHandler
                 handleKeys={['all', 'shift+8']}
                 handleEventType='keypress'
@@ -156,11 +154,7 @@ const ScanPanel = ({scannedCode}) => {
                     console.log(`do something upon keydown keyCode ${e.keyCode} of which ${e.which} and charCode ${e.charCode}`);
                 }} />
         </div>
-
-
-
-
-    );
+        );
 }
 
 export default ScanPanel;
