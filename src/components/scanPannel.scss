@@ -1,0 +1,77 @@
+.scanPannelContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    height: 100%;
+    align-items: center;
+    margin-top: 10px;
+
+    .iconScan{
+        min-height: 48px;
+        min-width: 70px;
+        background-image: url('./images/scan_icon.png');
+        background-repeat: no-repeat;
+    }
+
+    .scanMarkHeader {
+        flex: 0 0 auto;
+        margin-top: 10px;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .scanMarkComment {
+        flex: 0 0 auto;
+        margin-top: 15px;
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .scanMark {
+        flex: 0 0 auto;
+        margin-top: 15px;
+        font-size: 12px;
+    }
+
+    .videowrapper {
+        flex: 0 0 auto;
+        clear: both;
+        .videoblock {
+            border: 1px solid gray;
+        }
+    }
+
+    .sourceSelectPanel {
+        flex: 0 0 auto;
+        margin-top: 5px;
+        font-size: 12px;
+        .sourceSelectLabel {
+            width: 300px;
+        }
+        .sourceSelect {
+            width: 300px;
+            border-color: orange;
+        }
+        &.hidden{
+            display: none;
+        }
+    }
+
+    .resultWrap {
+        flex: 0 0 auto;
+        margin-top: 5px;
+        min-height: 20px;
+        border-radius: 10px;
+        background-color: #f2f2f2;
+        width: 300px;
+        margin-bottom: 5px;
+        font-size: 12px;
+
+        .resultData {
+            width: 300px;
+            margin-left: 20px;
+            margin-top: 4px;
+            text-align: center;
+        }
+    }
+}
